@@ -7,6 +7,7 @@ import { clamp, dprCap, isLowEnd } from '../lib/device'
 import { fire } from '../lib/confetti'
 import { buildHeart, mix, toCss, type HeartItem, type HeartLayout, type Rgb } from '../lib/heartLayout'
 import { sparklePath } from '../lib/shapes'
+import { haptics } from '../lib/haptics'
 import { Tape } from './doodles'
 
 const FONT_STACK = '"Nunito Variable", sans-serif'
@@ -66,6 +67,8 @@ const LoveHeartCard = forwardRef<LoveHeartCardRef, LoveHeartCardProps>(function 
     let prev = 0
     let lastShimmer = 0
     let resizeTimer = 0
+    let lastHapticTick = 0
+    let didInitialHaptic = false
     const shimmers: Array<{ item: HeartItem; until: number }> = []
     const measurer = document.createElement('canvas').getContext('2d')
 
@@ -125,6 +128,8 @@ const LoveHeartCard = forwardRef<LoveHeartCardRef, LoveHeartCardProps>(function 
       clearSettled()
       shimmers.length = 0
       finished = false
+      didInitialHaptic = false
+      lastHapticTick = 0
       startAt = performance.now()
       prev = 0
       setDone(false)
@@ -163,6 +168,11 @@ const LoveHeartCard = forwardRef<LoveHeartCardRef, LoveHeartCardProps>(function 
       ctx.textBaseline = 'middle'
 
       if (started && !finished) {
+        if (!didInitialHaptic && !reduced) {
+          didInitialHaptic = true
+          haptics.heartbeat()
+        }
+
         const t = now - startAt
         let pending = 0
         const lift = 34 * (layout.sc / 21)
@@ -175,9 +185,17 @@ const LoveHeartCard = forwardRef<LoveHeartCardRef, LoveHeartCardProps>(function 
           }
           if (u >= 1) {
             settleItem(item)
+            if (!reduced && now - lastHapticTick > 140) {
+              lastHapticTick = now
+              haptics.heartTick()
+            }
             continue
           }
           pending++
+          if (!reduced && u > 0.1 && now - lastHapticTick > 170) {
+            lastHapticTick = now
+            haptics.heartTick()
+          }
           const e = 1 - (1 - u) ** 3
           const x = toX(layout, item.x) + item.dx * (1 - e)
           const y = toY(layout, item.y) - (1 - e) * lift
@@ -190,6 +208,7 @@ const LoveHeartCard = forwardRef<LoveHeartCardRef, LoveHeartCardProps>(function 
         if (pending === 0) {
           finished = true
           setDone(true)
+          if (!reduced) haptics.heartComplete()
           onDoneRef.current?.()
           if (!reduced) void fire.hearts({ x: 0.5, y: 0.55 }, 24)
         }
@@ -282,6 +301,7 @@ const LoveHeartCard = forwardRef<LoveHeartCardRef, LoveHeartCardProps>(function 
     replayFnRef.current = () => {
       if (!layout) return
       if (reduced) return
+      haptics.heart()
       started = true
       resetAnimation()
       kick()
@@ -307,7 +327,10 @@ const LoveHeartCard = forwardRef<LoveHeartCardRef, LoveHeartCardProps>(function 
     }
   }, [reduced, autoStart, maxWidth, durationMs])
 
-  const replay = () => replayFnRef.current?.()
+  const replay = () => {
+    haptics.heart()
+    replayFnRef.current?.()
+  }
 
   if (bare) {
     return (

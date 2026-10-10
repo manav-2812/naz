@@ -6,6 +6,7 @@ import { copy } from '../data/copy'
 import { useIdle } from '../hooks/useIdle'
 import { fire } from '../lib/confetti'
 import { LOOK_EVENT, type LookDetail } from '../lib/events'
+import { haptics } from '../lib/haptics'
 import { sfx } from '../lib/sfx'
 import { toast } from '../lib/toast'
 import { Bow } from './doodles'
@@ -101,6 +102,7 @@ export default function Billi({ interactive = false, className, partyHat = false
 
   const onTap = (): void => {
     sfx.pop()
+    haptics.purr()
     setHappy(true)
     window.clearTimeout(happyTimer.current)
     happyTimer.current = window.setTimeout(() => setHappy(false), 1300)
@@ -111,6 +113,7 @@ export default function Billi({ interactive = false, className, partyHat = false
     }, 1600)
     if (taps.current >= 5) {
       taps.current = 0
+      haptics.celebrate()
       toast(copy.billi.egg)
       sfx.chime()
       void controls.start({

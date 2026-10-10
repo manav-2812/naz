@@ -1,6 +1,7 @@
 import { config } from '../../data/config'
 import { copy } from '../../data/copy'
 import { clamp, dprCap, isLowEnd, prefersReducedMotion } from '../../lib/device'
+import { haptics } from '../../lib/haptics'
 import { heartPath, pawPath, sparklePath } from '../../lib/shapes'
 import { sfx } from '../../lib/sfx'
 
@@ -436,11 +437,13 @@ export function createEngine(canvas: HTMLCanvasElement, events: EngineEvents): E
       pop(copy.game.bonk, x, y - 30 * u, P.cocoa)
       spark(x, y, 8, ['#E3B98A', '#F2D3A9'])
       sfx.bonk()
+      haptics.doubleTap()
       return
     }
     happyT = 0.35
     squash = 0.8
     sfx.catch()
+    haptics.light()
     if (e.kind === 'paw') {
       slow = 5
       pop(config.ui.slow, x, y - 30 * u, P.rose)
@@ -455,6 +458,7 @@ export function createEngine(canvas: HTMLCanvasElement, events: EngineEvents): E
     if (combo >= 5) {
       combo = 0
       score += 1
+      haptics.heart()
       pop(config.ui.wow, W / 2, H * 0.4, P.rose)
       spark(W / 2, H * 0.4, 22, [P.bubblegum, P.butter, P.milk, P.rose])
     }

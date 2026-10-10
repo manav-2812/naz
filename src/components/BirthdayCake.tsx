@@ -23,6 +23,7 @@ export default function BirthdayCake() {
   const toggleCandle = (id: number) => {
     if (blown[id]) {
       // Relight candle
+      haptics.light()
       sfx.ignite()
       const next = { ...blown, [id]: false }
       setBlown(next)

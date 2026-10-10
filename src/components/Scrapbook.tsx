@@ -9,6 +9,7 @@ import { memories, type Memory } from '../data/memories'
 import { useBreakpoint } from '../hooks/useBreakpoint'
 import { mulberry32, pick, range } from '../lib/seed'
 import { Arrow, Blossom, Heart, PressedFlower, Sparkle, Squiggle, Star, Tape, type TapeColor } from './doodles'
+import { haptics } from '../lib/haptics'
 import Photo from './Photo'
 import Reveal from './Reveal'
 import SectionHeading from './SectionHeading'
@@ -82,8 +83,12 @@ function CollageItem({ m, look, boardRef, top, onFront, onOpen }: {
         dragMomentum={false}
         whileDrag={{ scale: 1.05, rotate: 0 }}
         whileHover={{ scale: 1.02 }}
-        onDragStart={() => onFront(m.id)}
+        onDragStart={() => {
+          haptics.light()
+          onFront(m.id)
+        }}
         onTap={() => {
+          haptics.tap()
           onFront(m.id)
           onOpen(m.id)
         }}
@@ -94,6 +99,7 @@ function CollageItem({ m, look, boardRef, top, onFront, onOpen }: {
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault()
+            haptics.tap()
             onOpen(m.id)
           }
         }}
@@ -112,6 +118,7 @@ function Stack({ onOpen }: { onOpen: (id: number) => void }) {
   const total = memories.length
 
   const fling = (dir: number): void => {
+    haptics.light()
     void animate(x, dir * 520, {
       duration: 0.26,
       onComplete: () => {
@@ -125,6 +132,7 @@ function Stack({ onOpen }: { onOpen: (id: number) => void }) {
     ({ down, movement: [mx], velocity: [vx], tap }) => {
       const current = memories[index]
       if (tap && current) {
+        haptics.tap()
         onOpen(current.id)
         return
       }
@@ -250,7 +258,10 @@ export default function Scrapbook() {
                   key={v}
                   type="button"
                   aria-pressed={view === v}
-                  onClick={() => setView(v)}
+                  onClick={() => {
+                    haptics.light()
+                    setView(v)
+                  }}
                   className={clsx(
                     'min-h-[48px] rounded-full border-[3px] border-cocoa px-6 font-ui text-lg font-semibold text-cocoa shadow-sticker-sm',
                     view === v ? 'bg-strawberry' : 'bg-milk',

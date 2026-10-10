@@ -6,6 +6,7 @@ import { getBirthdayInfo } from '../lib/birthday'
 import { getTimeOfDayInfo } from '../lib/timeOfDay'
 import { useBreakpoint } from '../hooks/useBreakpoint'
 import { useReducedMotion } from '../hooks/useReducedMotion'
+import { haptics } from '../lib/haptics'
 import Billi from './Billi'
 import CelestialSky from './CelestialSky'
 import { Blossom, Cloud, Heart, Paw, Sparkle, Star, Underline } from './doodles'
@@ -189,7 +190,10 @@ export default function Hero({ ready }: { ready: boolean }) {
       <button
         type="button"
         data-cursor="open"
-        onClick={() => document.getElementById('countdown')?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' })}
+        onClick={() => {
+          haptics.light()
+          document.getElementById('countdown')?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' })
+        }}
         className="absolute inset-x-0 bottom-4 z-20 mx-auto flex min-h-[52px] w-max flex-col items-center gap-0.5 border-0 bg-transparent px-4"
         style={{ bottom: 'calc(var(--safe-bottom) + 14px)' }}
       >

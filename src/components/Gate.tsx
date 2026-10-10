@@ -3,6 +3,7 @@ import { useCallback, useRef, useState } from 'react'
 import { copy } from '../data/copy'
 import { useMusic } from '../hooks/useMusic'
 import { fire } from '../lib/confetti'
+import { haptics } from '../lib/haptics'
 import { sfx } from '../lib/sfx'
 import Billi from './Billi'
 import { Blossom, Bow, Heart, Paw, Scallop, Scribble, Sparkle, Star } from './doodles'
@@ -48,6 +49,7 @@ export default function Gate({ onOpened }: { onOpened: () => void }) {
   // Called when the heart finishes its drawing animation -> transitions to password page
   const handleHeartDone = useCallback((): void => {
     window.setTimeout(() => {
+      haptics.tap()
       setStep('password')
     }, 700)
   }, [])
@@ -56,6 +58,7 @@ export default function Gate({ onOpened }: { onOpened: () => void }) {
   const handlePasswordSuccess = useCallback((): void => {
     if (openedRef.current) return
     openedRef.current = true
+    haptics.celebrate()
 
     try {
       void musicRef.current.start()

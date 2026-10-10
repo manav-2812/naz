@@ -4,6 +4,7 @@ import { config } from '../data/config'
 import { copy, gameMessage } from '../data/copy'
 import { clamp } from '../lib/device'
 import { fire } from '../lib/confetti'
+import { haptics } from '../lib/haptics'
 import { sfx } from '../lib/sfx'
 import Billi from './Billi'
 import { createEngine, type Engine } from './game/engine'
@@ -38,6 +39,7 @@ export default function MilkcakeGame() {
         setResult({ score, best: bestRef.current })
         setPhase('over')
         if (isHighScore) {
+          haptics.celebrate()
           try {
             localStorage.setItem('naz_billi_party_hat', 'true')
           } catch (e) {
@@ -46,6 +48,8 @@ export default function MilkcakeGame() {
           window.dispatchEvent(new CustomEvent('billi_party_hat', { detail: true }))
           sfx.chime()
           void fire.hearts({ x: 0.5, y: 0.5 }, 26)
+        } else {
+          haptics.doubleTap()
         }
       },
     })
@@ -75,6 +79,7 @@ export default function MilkcakeGame() {
   }, [])
 
   const play = useCallback(() => {
+    haptics.tap()
     setPhase('playing')
     engineRef.current?.start()
     wrapRef.current?.focus({ preventScroll: true })

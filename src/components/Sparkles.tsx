@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { config } from '../data/config'
 import { clamp, dprCap, hasFinePointer, isLowEnd, prefersReducedMotion } from '../lib/device'
 import { lookAt } from '../lib/events'
+import { haptics } from '../lib/haptics'
 import { ParticleField, type ParticleKind } from '../lib/particles'
 import { sparklePath } from '../lib/shapes'
 import { Sparkle } from './doodles'
@@ -96,6 +97,7 @@ export default function Sparkles() {
       const now = performance.now()
       if (target && !target.closest(BUSY) && now - lastWish > 380) {
         lastWish = now
+        haptics.light()
         const text = config.wishes[Math.floor(Math.random() * config.wishes.length)] ?? config.wishes[0]
         setWishes((list) => [...list.slice(-3), { id: ++nextId.current, x: e.clientX, y: e.clientY, text }])
       }

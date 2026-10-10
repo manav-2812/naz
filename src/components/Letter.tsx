@@ -68,6 +68,7 @@ export default function Letter() {
 
   const handleBilliSignTap = (e: React.MouseEvent) => {
     sfx.pop()
+    haptics.heart()
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
     void fire.hearts(
       {

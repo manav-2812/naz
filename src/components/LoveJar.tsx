@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 import { fire } from '../lib/confetti'
+import { haptics } from '../lib/haptics'
 import { sfx } from '../lib/sfx'
 import { Star, Tape } from './doodles'
 import Reveal from './Reveal'
@@ -37,6 +38,7 @@ export default function LoveJar() {
 
   const pullStar = () => {
     sfx.pop()
+    haptics.heart()
     setJarBounce(true)
     setTimeout(() => setJarBounce(false), 400)
 
@@ -125,7 +127,10 @@ export default function LoveJar() {
                   </p>
                   <button
                     type="button"
-                    onClick={() => setCurrentStar(null)}
+                    onClick={() => {
+                      haptics.light()
+                      setCurrentStar(null)
+                    }}
                     className="font-hand text-sm text-cocoa-soft underline mt-2 hover:text-cocoa"
                   >
                     keep reading more stars ♡

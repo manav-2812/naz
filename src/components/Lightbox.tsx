@@ -6,6 +6,7 @@ import { config } from '../data/config'
 import type { Memory } from '../data/memories'
 import { lockScroll } from '../hooks/useLenis'
 import { clamp } from '../lib/device'
+import { haptics } from '../lib/haptics'
 import Photo from './Photo'
 
 interface Props {
@@ -35,6 +36,7 @@ export default function Lightbox({ items, index, onClose, onIndex }: Props) {
 
   const go = useCallback(
     (dir: number) => {
+      haptics.light()
       resetZoom()
       onIndex((index + dir + count) % count)
     },
@@ -144,7 +146,10 @@ export default function Lightbox({ items, index, onClose, onIndex }: Props) {
         type="button"
         data-cursor="open"
         aria-label={config.ui.close}
-        onClick={onClose}
+        onClick={() => {
+          haptics.light()
+          onClose()
+        }}
         className="absolute right-4 top-[calc(var(--safe-top)+14px)] z-20 flex h-12 w-12 items-center justify-center rounded-full border-[3px] border-cocoa bg-milk shadow-sticker-sm"
       >
         <X aria-hidden="true" className="h-6 w-6" />

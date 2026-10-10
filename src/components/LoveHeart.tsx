@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { useRef } from 'react'
 import { heartCopy } from '../data/heart'
+import { haptics } from '../lib/haptics'
 import { Blossom, Heart, Paw, Sparkle } from './doodles'
 import LoveHeartCard, { type LoveHeartCardRef } from './LoveHeartCard'
 import Reveal from './Reveal'
@@ -32,7 +33,10 @@ export default function LoveHeart() {
             <motion.button
               type="button"
               data-cursor="pop"
-              onClick={() => cardRef.current?.replay()}
+              onClick={() => {
+                haptics.heart()
+                cardRef.current?.replay()
+              }}
               className="btn-sticker"
               whileHover={{ scale: 1.05, rotate: -1.5 }}
               whileTap={{ scaleX: 1.08, scaleY: 0.88, y: 3 }}

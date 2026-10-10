@@ -1,0 +1,21 @@
+/** The 18 notes. Word for word. */
+export const reasons: readonly string[] = [
+  'you laugh before you finish the joke. every single time. i love it.',
+  'billi. you act like you don’t care and then you notice every tiny thing.',
+  'you call yourself my ungrateful potato and honestly, i’d pick that potato again.',
+  'talking to you is my favourite part of the day. even when it’s about nothing. especially when it’s about nothing.',
+  'you’re soft in a way that doesn’t make you weak. i notice that.',
+  'jannnnn mood: sweet, a bit dramatic, impossible to stay mad at.',
+  'you make me want to be better but you never make me feel behind.',
+  'the way you go “acha??” when you’re pretending to be suspicious.',
+  'you actually listen. like properly. not many people do.',
+  'your smile ruins my ability to say anything smart.',
+  'you’re stronger than you think. you’ll argue with me about this, which is also a reason.',
+  '9 september was a random day, and then it wasn’t.',
+  'you make normal plans feel like a big deal.',
+  'you get excited about small things and it spreads to me.',
+  'you look cute when you’re angry. (please don’t test me on this.)',
+  'i can be quiet around you and it’s still the best conversation.',
+  'you make “later” and “next year” sound like things i’m looking forward to.',
+  'you’re turning 18 and i get to be around for it. lucky me, honestly.',
+]

@@ -1,0 +1,248 @@
+/* Fonts: self-hosted, latin subset only, swapped in as they load */
+@font-face {
+  font-family: 'Fraunces Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('../../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-full-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Fraunces Variable';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('../../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-full-italic.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Fredoka Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300 700;
+  src: url('../../node_modules/@fontsource-variable/fredoka/files/fredoka-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Caveat Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 700;
+  src: url('../../node_modules/@fontsource-variable/caveat/files/caveat-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Nunito Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 1000;
+  src: url('../../node_modules/@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cream: #fff8f4;
+  --milk: #fffdfb;
+  --blush: #ffe3ec;
+  --petal: #ffcfe0;
+  --strawberry: #ffb5cd;
+  --bubblegum: #ff8fb5;
+  --rose: #f2689a;
+  --butter: #ffeba8;
+  --cocoa: #5b2a3e;
+  --cocoa-soft: #8b5468;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --gutter: clamp(16px, 5vw, 40px);
+}
+
+[data-theme='starlight'] {
+  --cream: #1a1228;
+  --milk: #241635;
+  --blush: #321844;
+  --petal: #51245e;
+  --strawberry: #722c6c;
+  --bubblegum: #e66b9d;
+  --rose: #ff65a3;
+  --butter: #ffdf73;
+  --cocoa: #fff2f7;
+  --cocoa-soft: #f0c5de;
+}
+
+[data-theme='starlight'] .paper {
+  background-color: var(--milk);
+  box-shadow: 0 10px 30px -10px rgba(255, 112, 166, 0.2);
+}
+
+@layer base {
+  html {
+    background: var(--cream);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--cream);
+    color: var(--cocoa);
+    transition: background-color 0.4s ease, color 0.4s ease;
+    font-family: 'Nunito Variable', 'Trebuchet MS', sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: clip;
+  }
+  html.scroll-locked,
+  html.scroll-locked body {
+    overflow: hidden;
+  }
+  ::selection {
+    background: var(--petal);
+    color: var(--cocoa);
+  }
+  :focus-visible {
+    outline: 3px solid var(--rose);
+    outline-offset: 3px;
+    border-radius: 10px;
+  }
+  button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+  img {
+    display: block;
+    max-width: 100%;
+  }
+  h1,
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+  /* The grain: one static pre-rendered tile, never filtered, never animated */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    background-image: url('/grain.png');
+    background-size: 160px 160px;
+    opacity: 0.05;
+  }
+}
+
+@layer components {
+  .font-display,
+  .display {
+    font-family: 'Fraunces Variable', Georgia, serif;
+    font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  }
+  .h-section {
+    font-family: 'Fraunces Variable', Georgia, serif;
+    font-variation-settings: 'SOFT' 100, 'WONK' 1;
+    font-weight: 700;
+    font-size: clamp(2rem, 7.4vw, 3.9rem);
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  .sub-hand {
+    font-family: 'Caveat Variable', cursive;
+    font-size: clamp(1.35rem, 4.2vw, 1.8rem);
+    line-height: 1.15;
+    color: var(--cocoa-soft);
+  }
+
+  .btn-sticker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 52px;
+    min-width: 52px;
+    padding: 0.55rem 1.7rem;
+    font-family: 'Fredoka Variable', 'Trebuchet MS', sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: 0.01em;
+    color: var(--cocoa);
+    background: var(--strawberry);
+    border: 3px solid var(--cocoa);
+    border-radius: 999px;
+    box-shadow: 3px 4px 0 var(--rose);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .paper {
+    background: var(--milk);
+    box-shadow:
+      0 10px 22px -10px rgba(242, 104, 154, 0.3),
+      0 2px 6px rgba(242, 104, 154, 0.14);
+  }
+
+  /* die-cut sticker: thick white outline and a soft pink shadow. Keep it on static wrappers. */
+  .die-cut {
+    filter: drop-shadow(3px 0 0 #fffdfb) drop-shadow(-3px 0 0 #fffdfb) drop-shadow(0 3px 0 #fffdfb)
+      drop-shadow(0 -3px 0 #fffdfb) drop-shadow(0 6px 8px rgba(242, 104, 154, 0.32));
+  }
+  .die-cut-sm {
+    filter: drop-shadow(2px 0 0 #fffdfb) drop-shadow(-2px 0 0 #fffdfb) drop-shadow(0 2px 0 #fffdfb)
+      drop-shadow(0 -2px 0 #fffdfb) drop-shadow(0 4px 5px rgba(242, 104, 154, 0.28));
+  }
+
+  .lined {
+    background-image: linear-gradient(to bottom, transparent calc(100% - 1px), rgba(242, 104, 154, 0.28) 0);
+    background-size: 100% 2.15rem;
+  }
+
+  .canvas-touch {
+    touch-action: none;
+    overscroll-behavior: contain;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .no-select {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  .z-bg {
+    z-index: 0;
+  }
+}
+
+/* the custom cursor only hides the native one after it has mounted */
+html.custom-cursor,
+html.custom-cursor * {
+  cursor: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-drift,
+  .animate-floaty,
+  .animate-bob,
+  .animate-beat,
+  .animate-walk,
+  .animate-spin,
+  .animate-eq,
+  .animate-zzz,
+  .animate-wiggle,
+  .animate-wave {
+    animation: none !important;
+  }
+}
